@@ -5,7 +5,7 @@ pragma solidity ^0.8.19;
 import {DeployRaffle} from "../../script/DeployRaffle.s.sol";
 import {Raffle} from "../../src/Raffle.sol";
 import {HelperConfig} from "../../script/HelperConfig.s.sol";
-import {Test} from "forge-std/Test.sol";
+import {Test, console} from "forge-std/Test.sol";
 import {Vm} from "forge-std/Vm.sol";
 import {VRFCoordinatorV2_5Mock} from "@chainlink/contracts/src/v0.8/vrf/mocks/VRFCoordinatorV2_5Mock.sol";
 import {LinkToken} from "../../test/mocks/LinkToken.sol";
@@ -281,5 +281,73 @@ contract RaffleTest is Test, CodeConstants {
             return;
         }
         _;
+    }
+
+    /*//////////////////////////////////////////////////////////////
+                            GETTERS
+    //////////////////////////////////////////////////////////////*/
+    function testGetRaffleState() public view {
+        Raffle.RaffleState rState = raffle.getRaffleState();
+        assert(uint256(rState) == 0);
+    }
+
+    function testGetNumWords() public view {
+        uint256 numWords = raffle.getNumWords();
+        assert(numWords == 1);
+    }
+
+    function testGetRequestConfirmations() public view {
+        uint256 requestConfirmations = raffle.getRequestConfirmations();
+        assert(requestConfirmations == 3);
+    }
+
+    function testGetRecentWinner() public raffleEntered {
+        address recentWinner = raffle.getRecentWinner();
+        assert(recentWinner == address(0));
+    }
+
+    function testGetPlayer() public raffleEntered {
+        address player = raffle.getPlayer(0);
+        assert(player == PLAYER);
+    }
+
+    function testGetLastTimeStamp() public view {
+        uint256 lastTimeStamp = raffle.getLastTimeStamp();
+        assert(lastTimeStamp == block.timestamp);
+    }
+
+    function testGetInterval() public view {
+        uint256 interval = raffle.getInterval();
+        assert(interval == automationUpdateInterval);
+    }
+
+    function testGetEntranceFee() public view {
+        uint256 entranceFee = raffle.getEntranceFee();
+        assert(entranceFee == raffleEntranceFee);
+    }
+
+    function testGetNumberOfPlayers() public raffleEntered {
+        uint256 numberOfPlayers = raffle.getNumberOfPlayers();
+        assert(numberOfPlayers == 1);
+    }
+
+    function testGetGasLane() public view {
+        bytes32 gasLaneValue = raffle.getGasLane();
+        assert(gasLaneValue == gasLane);
+    }
+
+    function testGetCallbackGasLimit() public view {
+        uint32 callbackGasLimitValue = raffle.getCallbackGasLimit();
+        assert(callbackGasLimitValue == callbackGasLimit);
+    }
+
+    function testGetSubscriptionId() public view {
+        uint256 subscriptionIdValue = raffle.getSubscriptionId();
+        assert(subscriptionIdValue == subscriptionId);
+    }
+
+    function testGetVrfCoordinator() public view {
+        address vrfCoordinatorAddress = address(raffle.getVrfCoordinator());
+        assert(vrfCoordinatorAddress == vrfCoordinatorV2_5);
     }
 }

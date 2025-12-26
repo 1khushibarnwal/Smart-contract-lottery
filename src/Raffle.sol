@@ -173,7 +173,8 @@ contract Raffle is VRFConsumerBaseV2Plus, AutomationCompatibleInterface {
      */
     function fulfillRandomWords(
         uint256,
-        /* requestId */ uint256[] calldata randomWords
+        /* requestId */
+        uint256[] calldata randomWords
     ) internal override {
         // s_players size 10
         // randomNumber 202
@@ -232,5 +233,21 @@ contract Raffle is VRFConsumerBaseV2Plus, AutomationCompatibleInterface {
 
     function getNumberOfPlayers() public view returns (uint256) {
         return sPlayers.length;
+    }
+
+    function getGasLane() public view returns (bytes32) {
+        return I_GAS_LANE;
+    }
+
+    function getCallbackGasLimit() public view returns (uint32) {
+        return I_CALLBACK_GAS_LIMIT;
+    }
+
+    function getSubscriptionId() public view returns (uint256) {
+        return I_SUBSCRIPTION_ID;
+    }
+
+    function getVrfCoordinator() public view returns (address) {
+        return address(s_vrfCoordinator);
     }
 }
