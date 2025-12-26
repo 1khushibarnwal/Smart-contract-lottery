@@ -105,23 +105,18 @@ contract HelperConfig is CodeConstants, Script {
         public
         returns (NetworkConfig memory sepoliaNetworkConfig)
     {
+        uint256 subId = vm.envOr("SEPOLIA_SUB_ID", uint256(0));
+
         sepoliaNetworkConfig = NetworkConfig({
-            subscriptionId: _getSepoliaSubId(),
+            subscriptionId: subId, // 0 → scripts create subscription
             gasLane: 0x787d74caea10b2b357790d5b5247c2f63d1d91572a9846f780606e4d953677ae,
-            automationUpdateInterval: 30, // 30 seconds
+            automationUpdateInterval: 30,
             raffleEntranceFee: 0.01 ether,
-            callbackGasLimit: 500000, // 500,000 gas
+            callbackGasLimit: 500000,
             vrfCoordinatorV2_5: 0x9DdfaCa8183c41ad55329BdeeD9F6A8d53168B1B,
             link: 0x779877A7B0D9E8603169DdbD7836e478b4624789,
             account: 0x78c1A68087CfD34A781eb7ef7D7fd8b3cd7C965b
         });
-    }
-
-    function _getSepoliaSubId() internal view returns (uint256) {
-        if (block.chainid == 11155111) {
-            return vm.envUint("SEPOLIA_SUB_ID");
-        }
-        return 0;
     }
 
     function getOrCreateAnvilEthConfig() public returns (NetworkConfig memory) {
