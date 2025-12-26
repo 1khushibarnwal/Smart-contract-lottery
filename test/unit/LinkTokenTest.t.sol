@@ -9,11 +9,7 @@ contract MockERC677Receiver is ERC677Receiver {
     uint256 public lastValue;
     bytes public lastData;
 
-    function onTokenTransfer(
-        address _sender,
-        uint256 _value,
-        bytes calldata _data
-    ) external override {
+    function onTokenTransfer(address _sender, uint256 _value, bytes calldata _data) external override {
         lastSender = _sender;
         lastValue = _value;
         lastData = _data;

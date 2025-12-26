@@ -33,8 +33,7 @@ contract DeployRaffleTest is Test {
     function test_RunCreatesSubscriptionIfMissing() external {
         (, HelperConfig helperConfig) = deployer.run();
 
-        HelperConfig.NetworkConfig memory config = helperConfig
-            .getConfigByChainId(block.chainid);
+        HelperConfig.NetworkConfig memory config = helperConfig.getConfigByChainId(block.chainid);
 
         // Subscription must exist after run()
         assertGt(config.subscriptionId, 0);
@@ -48,18 +47,14 @@ contract DeployRaffleTest is Test {
     function test_RaffleConstructorParamsMatchConfig() external {
         (Raffle raffle, HelperConfig helperConfig) = deployer.run();
 
-        HelperConfig.NetworkConfig memory config = helperConfig
-            .getConfigByChainId(block.chainid);
+        HelperConfig.NetworkConfig memory config = helperConfig.getConfigByChainId(block.chainid);
 
         assertEq(raffle.getEntranceFee(), config.raffleEntranceFee);
         assertEq(raffle.getInterval(), config.automationUpdateInterval);
         assertEq(raffle.getGasLane(), config.gasLane);
         assertEq(raffle.getCallbackGasLimit(), config.callbackGasLimit);
         assertEq(raffle.getSubscriptionId(), config.subscriptionId);
-        assertEq(
-            address(raffle.getVrfCoordinator()),
-            config.vrfCoordinatorV2_5
-        );
+        assertEq(address(raffle.getVrfCoordinator()), config.vrfCoordinatorV2_5);
     }
 
     /*//////////////////////////////////////////////////////////////
@@ -68,7 +63,7 @@ contract DeployRaffleTest is Test {
 
     function test_RunIsIdempotent() external {
         deployer.run();
-        (Raffle raffle2, ) = deployer.run();
+        (Raffle raffle2,) = deployer.run();
 
         // Should still deploy a valid raffle
         assertTrue(address(raffle2) != address(0));
@@ -77,8 +72,7 @@ contract DeployRaffleTest is Test {
     function test_HelperConfigIsUpdatedAfterRun() external {
         (, HelperConfig helperConfig) = deployer.run();
 
-        HelperConfig.NetworkConfig memory config = helperConfig
-            .getConfigByChainId(block.chainid);
+        HelperConfig.NetworkConfig memory config = helperConfig.getConfigByChainId(block.chainid);
 
         assertGt(config.subscriptionId, 0);
         assertTrue(config.vrfCoordinatorV2_5 != address(0));
@@ -88,21 +82,19 @@ contract DeployRaffleTest is Test {
     function test_SubscriptionIsReusedOnSecondRun() external {
         (, HelperConfig helperConfig) = deployer.run();
 
-        HelperConfig.NetworkConfig memory config1 = helperConfig
-            .getConfigByChainId(block.chainid);
+        HelperConfig.NetworkConfig memory config1 = helperConfig.getConfigByChainId(block.chainid);
 
         uint256 subscriptionIdBefore = config1.subscriptionId;
 
         deployer.run();
 
-        HelperConfig.NetworkConfig memory config2 = helperConfig
-            .getConfigByChainId(block.chainid);
+        HelperConfig.NetworkConfig memory config2 = helperConfig.getConfigByChainId(block.chainid);
 
         assertEq(config2.subscriptionId, subscriptionIdBefore);
     }
 
     function test_RaffleConstructorParamsAreNonZero() external {
-        (Raffle raffle, ) = deployer.run();
+        (Raffle raffle,) = deployer.run();
 
         assertTrue(address(raffle.getVrfCoordinator()) != address(0));
         assertTrue(raffle.getSubscriptionId() != 0);
@@ -113,21 +105,16 @@ contract DeployRaffleTest is Test {
 
     function test_ConfigConstantsRemainUnchanged() external {
         HelperConfig helperConfig = new HelperConfig();
-        HelperConfig.NetworkConfig memory beforeConfig = helperConfig
-            .getConfigByChainId(block.chainid);
+        HelperConfig.NetworkConfig memory beforeConfig = helperConfig.getConfigByChainId(block.chainid);
 
         deployer.run();
 
-        HelperConfig.NetworkConfig memory afterConfig = helperConfig
-            .getConfigByChainId(block.chainid);
+        HelperConfig.NetworkConfig memory afterConfig = helperConfig.getConfigByChainId(block.chainid);
 
         assertEq(afterConfig.gasLane, beforeConfig.gasLane);
         assertEq(afterConfig.raffleEntranceFee, beforeConfig.raffleEntranceFee);
         assertEq(afterConfig.callbackGasLimit, beforeConfig.callbackGasLimit);
-        assertEq(
-            afterConfig.automationUpdateInterval,
-            beforeConfig.automationUpdateInterval
-        );
+        assertEq(afterConfig.automationUpdateInterval, beforeConfig.automationUpdateInterval);
     }
 
     function test_DoesNotCreateNewSubscriptionIfAlreadyExists() external {
@@ -135,16 +122,14 @@ contract DeployRaffleTest is Test {
         deployer.run();
 
         HelperConfig helperConfig = new HelperConfig();
-        HelperConfig.NetworkConfig memory configBefore = helperConfig
-            .getConfigByChainId(block.chainid);
+        HelperConfig.NetworkConfig memory configBefore = helperConfig.getConfigByChainId(block.chainid);
 
         uint256 subscriptionIdBefore = configBefore.subscriptionId;
 
         // Second run should NOT create a new one
         deployer.run();
 
-        HelperConfig.NetworkConfig memory configAfter = helperConfig
-            .getConfigByChainId(block.chainid);
+        HelperConfig.NetworkConfig memory configAfter = helperConfig.getConfigByChainId(block.chainid);
 
         assertEq(configAfter.subscriptionId, subscriptionIdBefore);
     }
@@ -152,8 +137,7 @@ contract DeployRaffleTest is Test {
     function test_VRFCoordinatorIsContract() external {
         (, HelperConfig helperConfig) = deployer.run();
 
-        HelperConfig.NetworkConfig memory config = helperConfig
-            .getConfigByChainId(block.chainid);
+        HelperConfig.NetworkConfig memory config = helperConfig.getConfigByChainId(block.chainid);
 
         uint256 size;
         address coordinator = config.vrfCoordinatorV2_5;
@@ -168,14 +152,13 @@ contract DeployRaffleTest is Test {
     function test_RaffleUsesSameSubscriptionAsHelperConfig() external {
         (Raffle raffle, HelperConfig helperConfig) = deployer.run();
 
-        HelperConfig.NetworkConfig memory config = helperConfig
-            .getConfigByChainId(block.chainid);
+        HelperConfig.NetworkConfig memory config = helperConfig.getConfigByChainId(block.chainid);
 
         assertEq(raffle.getSubscriptionId(), config.subscriptionId);
     }
 
     function test_RaffleEconomicParamsAreSane() external {
-        (Raffle raffle, ) = deployer.run();
+        (Raffle raffle,) = deployer.run();
 
         assertGt(raffle.getInterval(), 0);
         assertGt(raffle.getEntranceFee(), 0);
@@ -186,22 +169,20 @@ contract DeployRaffleTest is Test {
 
         // Simulate another chain config existing
         uint256 fakeChainId = 999;
-        HelperConfig.NetworkConfig memory fakeConfig = helperConfig
-            .getConfigByChainId(block.chainid);
+        HelperConfig.NetworkConfig memory fakeConfig = helperConfig.getConfigByChainId(block.chainid);
 
         helperConfig.setConfig(fakeChainId, fakeConfig);
 
         deployer.run();
 
-        HelperConfig.NetworkConfig memory unchangedConfig = helperConfig
-            .getConfigByChainId(fakeChainId);
+        HelperConfig.NetworkConfig memory unchangedConfig = helperConfig.getConfigByChainId(fakeChainId);
 
         assertEq(unchangedConfig.subscriptionId, fakeConfig.subscriptionId);
     }
 
     function test_EachRunDeploysNewRaffleInstance() external {
-        (Raffle raffle1, ) = deployer.run();
-        (Raffle raffle2, ) = deployer.run();
+        (Raffle raffle1,) = deployer.run();
+        (Raffle raffle2,) = deployer.run();
 
         assertTrue(address(raffle1) != address(raffle2));
     }
@@ -229,11 +210,10 @@ contract DeployRaffleTest is Test {
         // First run → creates subscription
         (, HelperConfig helperConfig) = deployer.run();
 
-        HelperConfig.NetworkConfig memory originalConfig = helperConfig
-            .getConfig();
+        HelperConfig.NetworkConfig memory originalConfig = helperConfig.getConfig();
 
         // Second run → should reuse subscription
-        (Raffle raffle, ) = deployer.run();
+        (Raffle raffle,) = deployer.run();
 
         HelperConfig.NetworkConfig memory newConfig = helperConfig.getConfig();
 
@@ -264,8 +244,8 @@ contract DeployRaffleTest is Test {
     }
 
     function testMultipleRunsDeployMultipleRaffles() external {
-        (Raffle raffle1, ) = deployer.run();
-        (Raffle raffle2, ) = deployer.run();
+        (Raffle raffle1,) = deployer.run();
+        (Raffle raffle2,) = deployer.run();
 
         assertTrue(address(raffle1) != address(raffle2));
     }
