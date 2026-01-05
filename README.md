@@ -9,11 +9,26 @@ This contract accepts lottery entries and picks a random winner using on-chain r
 
 ## 🚀 Features
 
+- 🔐 Secure and gas-efficient Solidity contract
 - 🚀 Lottery smart contract written in Solidity
-- 🧪 Tested with Foundry
+- 🧪 Comprehensive unit & integration tests with Foundry
 - 🛠️ Deployable on local Anvil, testnets, or mainnet
 - 💡 Implements key patterns needed for on-chain randomness
 - 📦 Sample scripts for deployment & testing
+- 📁 Clean, production-ready repository structure
+
+---
+
+## 🧱 Tech Stack
+
+| Layer           | Technology                                               |
+| --------------- | -------------------------------------------------------- |
+| Smart Contracts | Solidity ^0.8.x                                          |
+| Framework       | Foundry (Forge, Anvil, Cast)                             |
+| Randomness      | Chainlink VRF (or mock implementation for local testing) |
+| Testing         | Forge test suite                                         |
+| Tooling         | Git, Makefile                                            |
+| Network Support | Localhost, Ethereum Testnets                             |
 
 ---
 
@@ -24,10 +39,11 @@ This contract accepts lottery entries and picks a random winner using on-chain r
 ├── 📂 broadcast/ \
 ├── 📂 lib/ \
 ├── 📂 script/ \
+| └── _.s.sol \
 ├── 📂 src/ \
 │ └── _.sol \
 ├── 📂 test/ \
-│ └── _.t.sol \
+│ └── \_.t.sol \
 ├── 📜 .gitignore \
 ├── 📜 Makefile \
 ├── 📜 foundry.toml \
@@ -56,15 +72,30 @@ cd Smart-contract-lottery
 Install Foundry dependencies and build:
 
 ```bash
+forge install
 forge build
 ```
 
-## 🧪 Local Development
+---
+
+## 🧪 Local Development & Testing
 
 Start a local node (Anvil):
 
 ```bash
 anvil
+```
+
+Run Tests:
+
+```bash
+forge test
+```
+
+Run Tests With Verbosity:
+
+```bash
+forge test -vvv
 ```
 
 Deploy to local:
@@ -73,11 +104,7 @@ Deploy to local:
 forge script script/DeployRaffle.s.sol --fork-url http://localhost:8545 --broadcast
 ```
 
-Run tests:
-
-```bash
-forge test
-```
+---
 
 ## 📦 Deployment
 
@@ -112,3 +139,37 @@ To generate coverage report:
 ```bash
 forge coverage
 ```
+
+---
+
+🧠 Contract Logic Overview
+
+1. Users enter the lottery by sending ETH.
+
+2. Entries are recorded on-chain.
+
+3. At predefined intervals or conditions:
+
+   - A randomness request is triggered.
+
+   - A winner is selected in a trust-minimized manner.
+
+4. The winner receives the entire prize pool.
+
+5. Contract state resets for the next round.
+
+✔️ No centralized authority
+✔️ Verifiable randomness
+✔️ Transparent execution
+
+## 🔒 Security Considerations
+
+- Reentrancy-safe payout logic
+
+- Strict state transitions
+
+- Deterministic testing using mocks
+
+- Uses Solidity ^0.8.x overflow protections
+
+❗ This project is not audited. Do not use in production with real funds.
