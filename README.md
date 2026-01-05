@@ -19,19 +19,19 @@ This contract accepts lottery entries and picks a random winner using on-chain r
 
 ## 📁 Repository Structure
 
-📦 Smart-contract-lottery
-├── 📂 .github/…
-├── 📂 broadcast/
-├── 📂 lib/
-├── 📂 script/
-├── 📂 src/
-│ └── _.sol
-├── 📂 test/
-│ └── _.t.sol
-├── 📜 .gitignore
-├── 📜 Makefile
-├── 📜 foundry.toml
-└── 📜 README.md
+📦 Smart-contract-lottery \
+├── 📂 .github/… \
+├── 📂 broadcast/ \
+├── 📂 lib/ \
+├── 📂 script/ \
+├── 📂 src/ \
+│ └── _.sol \
+├── 📂 test/ \
+│ └── _.t.sol \
+├── 📜 .gitignore \
+├── 📜 Makefile \
+├── 📜 foundry.toml \
+└── 📜 README.md \
 
 ## 🧩 Prerequisites
 
