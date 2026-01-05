@@ -31,7 +31,7 @@ This contract accepts lottery entries and picks a random winner using on-chain r
 ├── 📜 .gitignore \
 ├── 📜 Makefile \
 ├── 📜 foundry.toml \
-└── 📜 README.md \
+└── 📜 README.md
 
 ## 🧩 Prerequisites
 
