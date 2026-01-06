@@ -9,6 +9,7 @@ This contract accepts lottery entries and picks a random winner using on-chain r
 
 ## 🚀 Features
 
+- ✅ ERC20 stablecoin implementation
 - 🔐 Secure and gas-efficient Solidity contract
 - 🚀 Lottery smart contract written in Solidity
 - 🧪 Comprehensive unit & integration tests with Foundry
@@ -48,6 +49,17 @@ This contract accepts lottery entries and picks a random winner using on-chain r
 ├── 📜 Makefile \
 ├── 📜 foundry.toml \
 └── 📜 README.md
+
+## 🛠️ Tech Stack
+
+| Technology                 | Purpose                                |
+| -------------------------- | -------------------------------------- |
+| **Solidity**               | Smart contracts                        |
+| **Foundry (Forge & Cast)** | Local development, testing, deployment |
+| **OpenZeppelin Contracts** | Secure base ERC20 & utilities          |
+| **Chainlink Price Feeds**  | Reliable on-chain market data          |
+
+---
 
 ## 🧩 Prerequisites
 
