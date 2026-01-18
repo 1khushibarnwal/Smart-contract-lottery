@@ -9,7 +9,6 @@ This contract accepts lottery entries and picks a random winner using on-chain r
 
 ## 🚀 Features
 
-- ✅ ERC20 stablecoin implementation
 - 🔐 Secure and gas-efficient Solidity contract
 - 🚀 Lottery smart contract written in Solidity
 - 🧪 Comprehensive unit & integration tests with Foundry
@@ -161,7 +160,6 @@ forge coverage
 2. Entries are recorded on-chain.
 
 3. At predefined intervals or conditions:
-
    - A randomness request is triggered.
 
    - A winner is selected in a trust-minimized manner.
