@@ -37,7 +37,7 @@ contract DeployRaffleTest is Test {
 
         // Subscription must exist after run()
         assertGt(config.subscriptionId, 0);
-        assertTrue(config.vrfCoordinatorV2_5 != address(0));
+        assertTrue(config.vrfCoordinatorV25 != address(0));
     }
 
     /*//////////////////////////////////////////////////////////////
@@ -54,7 +54,7 @@ contract DeployRaffleTest is Test {
         assertEq(raffle.getGasLane(), config.gasLane);
         assertEq(raffle.getCallbackGasLimit(), config.callbackGasLimit);
         assertEq(raffle.getSubscriptionId(), config.subscriptionId);
-        assertEq(address(raffle.getVrfCoordinator()), config.vrfCoordinatorV2_5);
+        assertEq(address(raffle.getVrfCoordinator()), config.vrfCoordinatorV25);
     }
 
     /*//////////////////////////////////////////////////////////////
@@ -75,7 +75,7 @@ contract DeployRaffleTest is Test {
         HelperConfig.NetworkConfig memory config = helperConfig.getConfigByChainId(block.chainid);
 
         assertGt(config.subscriptionId, 0);
-        assertTrue(config.vrfCoordinatorV2_5 != address(0));
+        assertTrue(config.vrfCoordinatorV25 != address(0));
         assertTrue(config.account != address(0));
     }
 
@@ -140,7 +140,7 @@ contract DeployRaffleTest is Test {
         HelperConfig.NetworkConfig memory config = helperConfig.getConfigByChainId(block.chainid);
 
         uint256 size;
-        address coordinator = config.vrfCoordinatorV2_5;
+        address coordinator = config.vrfCoordinatorV25;
 
         assembly {
             size := extcodesize(coordinator)
@@ -232,7 +232,7 @@ contract DeployRaffleTest is Test {
         assertGt(config.callbackGasLimit, 0);
         assertGt(config.raffleEntranceFee, 0);
         assertGt(config.automationUpdateInterval, 0);
-        assertTrue(config.vrfCoordinatorV2_5 != address(0));
+        assertTrue(config.vrfCoordinatorV25 != address(0));
     }
 
     function testRaffleUsesCorrectVRFCoordinator() external {
@@ -240,7 +240,7 @@ contract DeployRaffleTest is Test {
 
         HelperConfig.NetworkConfig memory config = helperConfig.getConfig();
 
-        assertEq(raffle.getVrfCoordinator(), config.vrfCoordinatorV2_5);
+        assertEq(raffle.getVrfCoordinator(), config.vrfCoordinatorV25);
     }
 
     function testMultipleRunsDeployMultipleRaffles() external {

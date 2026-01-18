@@ -26,11 +26,10 @@ contract CreateSubscriptionTest is Test {
     function testCreateSubscriptionDirectCall() external {
         HelperConfig.NetworkConfig memory config = helperConfig.getConfig();
 
-        (uint256 subId, address vrfCoordinator) =
-            createSub.createSubscription(config.vrfCoordinatorV2_5, config.account);
+        (uint256 subId, address vrfCoordinator) = createSub.createSubscription(config.vrfCoordinatorV25, config.account);
 
         assertGt(subId, 0);
-        assertEq(vrfCoordinator, config.vrfCoordinatorV2_5);
+        assertEq(vrfCoordinator, config.vrfCoordinatorV25);
     }
 }
 
@@ -48,12 +47,11 @@ contract AddConsumerTest is Test {
     function testAddConsumerToSubscription() external {
         HelperConfig.NetworkConfig memory config = helperConfig.getConfig();
 
-        (uint256 subId,) = createSub.createSubscription(config.vrfCoordinatorV2_5, config.account);
+        (uint256 subId,) = createSub.createSubscription(config.vrfCoordinatorV25, config.account);
 
         address fakeConsumer = address(123);
 
-        addConsumer.addConsumer(fakeConsumer, config.vrfCoordinatorV2_5, subId, config.account);
-
+        addConsumer.addConsumer(fakeConsumer, config.vrfCoordinatorV25, subId, config.account);
         // If no revert → consumer added successfully
         assertTrue(true);
     }
@@ -84,9 +82,9 @@ contract FundSubscriptionTest is Test {
             config = helperConfig.getConfig();
         }
 
-        fundSub.fundSubscription(config.vrfCoordinatorV2_5, config.subscriptionId, config.link, config.account);
+        fundSub.fundSubscription(config.vrfCoordinatorV25, config.subscriptionId, config.link, config.account);
 
-        VRFCoordinatorV2_5Mock coordinator = VRFCoordinatorV2_5Mock(config.vrfCoordinatorV2_5);
+        VRFCoordinatorV2_5Mock coordinator = VRFCoordinatorV2_5Mock(config.vrfCoordinatorV25);
 
         (uint96 balance,,,,) = coordinator.getSubscription(config.subscriptionId);
         assertGt(balance, 0);
