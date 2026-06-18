@@ -1,4 +1,4 @@
-# Smart Contract Lottery
+# ChainLuck
 
 A decentralized lottery smart contract built in **Solidity** using the **Foundry** development framework.  
 This project lets users participate in a lottery on an Ethereum-compatible blockchain and selects a random winner — showcasing key Web3 concepts like randomness, testing, and deployment.
